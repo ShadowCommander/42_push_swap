@@ -1,5 +1,5 @@
 
-void	swap_top(t_llist *list)
+void	ps_swap_top(t_llist *list)
 {
 	t_node	*node;
 
