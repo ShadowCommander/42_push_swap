@@ -1,9 +1,16 @@
-struct	s_push_swap
-{
-	t_llist *a;
-	t_llist *b;
-}
-typedef struct s_push_swap	t_push_swap;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtong <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/28 18:16:25 by jtong             #+#    #+#             */
+/*   Updated: 2021/10/28 18:16:41 by jtong            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
 
 int		parse_args(int argc, char **argv, t_push_swap *ps)
 {
