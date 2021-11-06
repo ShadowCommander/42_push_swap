@@ -6,7 +6,7 @@
 /*   By: jtong <jtong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 15:04:54 by jtong             #+#    #+#             */
-/*   Updated: 2021/11/06 18:13:55 by jtong            ###   ########.fr       */
+/*   Updated: 2021/11/06 19:49:21 by jtong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		ps_find_biggest(t_llist *list);
 int		ps_find_smallest(t_llist *list);
 int		ps_find_next_bigger(int current, t_llist *list);
 void	ps_delete_reset(t_array *reset);
-void	die(t_push_swap **ps, t_array *reset);
+void	ps_die(t_push_swap *ps, t_array *reset);
 int		ps_atoi(t_push_swap *ps, const char *ptr);
 
 void	ps_spin_a(t_push_swap *ps, int steps);

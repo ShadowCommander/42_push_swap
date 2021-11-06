@@ -6,7 +6,7 @@
 /*   By: jtong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 23:00:49 by jtong             #+#    #+#             */
-/*   Updated: 2021/11/06 18:15:35 by jtong            ###   ########.fr       */
+/*   Updated: 2021/11/06 19:49:07 by jtong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ t_array	*ps_create_reset(t_push_swap *ps)
 
 	reset = (t_array *)malloc(sizeof(*reset));
 	if (reset == NULL)
-		die(&ps, reset);
+		ps_die(ps, reset);
 	reset->size = ps->a->length;
 	reset->arr = (void **)malloc(sizeof(*reset->arr) * (reset->size + 1));
 	if (reset->arr == NULL)
-		die(&ps, reset);
+		ps_die(ps, reset);
 	node = ps->a->start;
 	i = 0;
 	while (node)
@@ -55,13 +55,15 @@ t_array	*ps_create_reset(t_push_swap *ps)
 	reset->arr[i] = NULL;
 	reset->saved = ft_listnew();
 	if (reset->saved == NULL)
-		die(&ps, reset);
+		ps_die(ps, reset);
 	reset->saved->length = (size_t)-1;
 	return (reset);
 }
 
 void	ps_delete_reset(t_array *reset)
 {
+	if (reset == NULL)
+		return ;
 	if (reset->arr != NULL)
 	{
 		free(reset->arr);
@@ -72,6 +74,14 @@ void	ps_delete_reset(t_array *reset)
 		free(reset);
 }
 
+void	ps_flush_reset(t_push_swap *ps, t_array *reset)
+{
+	while (ps->instructions->length > 0)
+		ft_listfree(ft_listpop(ps->instructions), 0);
+	while (reset->saved->start)
+		ft_listadd(ps->instructions, ft_listpop(reset->saved));
+}
+
 /* loop sorting algos */
 void	ps_run_sorts(t_push_swap *ps)
 {
@@ -79,25 +89,24 @@ void	ps_run_sorts(t_push_swap *ps)
 					&ps_small_sort, NULL};
 	t_array		*reset;
 	int			i;
-	int			j;
 
 	reset = ps_create_reset(ps);
 	if (reset == NULL)
-		die(&ps, NULL);
+		ps_die(ps, NULL);
 	i = 0;
 	while (sort_functions[i])
 	{
 		sort_functions[i](ps);
 		if (ps->instructions->length < reset->saved->length)
 		{
-			j = ps->instructions->length;
 			while (reset->saved->start)
 				ft_listfree(ft_listpop(reset->saved), 0);
-			while (j-- > 0)
+			while (ps->instructions->length > 0)
 				ft_listadd(reset->saved, ft_listpop(ps->instructions));
 		}
 		ps_reset(ps, reset);
 		i++;
 	}
+	ps_flush_reset(ps, reset);
 	ps_delete_reset(reset);
 }
