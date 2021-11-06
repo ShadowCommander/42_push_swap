@@ -6,7 +6,7 @@
 /*   By: jtong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 02:12:43 by jtong             #+#    #+#             */
-/*   Updated: 2021/11/06 02:59:00 by jtong            ###   ########.fr       */
+/*   Updated: 2021/11/06 20:08:21 by jtong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,15 @@ void	ps_spin_calc(t_push_swap *ps, t_node *node, t_insert_vars *vars,
 		rotations[2] = vars->k;
 		rotations[3] = vars->l;
 		vars->store = vars->result;
+	}
+}
+
+void	ps_is_duplicate(t_push_swap *ps, int num, t_node *node)
+{
+	while (node)
+	{
+		if (num == ps_get(node))
+			ps_die(ps, NULL);
+		node = node->next;
 	}
 }

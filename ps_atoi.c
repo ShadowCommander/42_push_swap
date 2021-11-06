@@ -6,7 +6,7 @@
 /*   By: jtong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 17:41:01 by jtong             #+#    #+#             */
-/*   Updated: 2021/11/06 19:49:03 by jtong            ###   ########.fr       */
+/*   Updated: 2021/11/06 20:07:51 by jtong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ps_atoi(t_push_swap *ps, const char *ptr)
 	{
 		v.c = ft_ctoi(*v.s);
 		if (ft_abs(v.acc) >= ft_abs(v.cutoff) && ft_abs(v.c + ft_abs(v.acc
-			- v.cutoff)) > ft_abs(v.cutlim) + (v.neg == -1))
+					- v.cutoff)) > ft_abs(v.cutlim) + (v.neg == -1))
 			ps_die(ps, NULL);
 		v.acc = (v.acc * 10) + (v.c * v.neg);
 		v.s++;

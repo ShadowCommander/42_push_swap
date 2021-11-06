@@ -6,7 +6,7 @@
 /*   By: jtong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 18:16:25 by jtong             #+#    #+#             */
-/*   Updated: 2021/11/06 19:51:06 by jtong            ###   ########.fr       */
+/*   Updated: 2021/11/06 20:14:58 by jtong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,23 @@ void	ps_die(t_push_swap *ps, t_array *reset)
 	exit(-1);
 }
 
-int	ps_parse_args(int argc, char **argv, t_push_swap *ps)
+void	ps_parse_args(char **splits, t_push_swap *ps)
 {
 	int		i;
 	int		num;
 	t_node	*node;
 
 	i = 0;
-	while (argv[++i])
-		if (!ft_isnum(argv[i], 1))
-			return (-1);
-	i = 1;
-	while (i < argc)
+	while (splits[i])
 	{
-		num = ps_atoi(ps, argv[i]);
+		if (!ft_isnum(splits[i], 1))
+			ps_die(ps, NULL);
+		i++;
+	}
+	i = 0;
+	while (splits[i])
+	{
+		num = ps_atoi(ps, splits[i]);
 		node = ps->a->start;
 		while (node)
 		{
@@ -70,11 +73,10 @@ int	ps_parse_args(int argc, char **argv, t_push_swap *ps)
 				ps_die(ps, NULL);
 			node = node->next;
 		}
-		ft_listadd(ps->a, ft_listnode(ft_strndup((char *)&num, sizeof(num)),
-				sizeof(num)));
+		ft_listadd(ps->a, ft_listnode(ft_strndup((char *)&num,
+					sizeof(num)), sizeof(num)));
 		i++;
 	}
-	return (0);
 }
 
 void	ps_init(t_push_swap **ps)
@@ -96,10 +98,17 @@ void	ps_init(t_push_swap **ps)
 int	main(int argc, char **argv)
 {
 	t_push_swap	*ps;
+	int			i;
+	char		**splits;
 
 	ps_init(&ps);
-	if (ps_parse_args(argc, argv, ps) == -1)
-		ps_die(ps, NULL);
+	i = 1;
+	while (i < argc)
+	{
+		splits = ft_strsplit(argv[i], ' ');
+		ps_parse_args(splits, ps);
+		i++;
+	}
 	if (ps->a->length <= 1 || ps_is_sorted(ps))
 	{
 		ps_cleanup_args(ps, 0);
