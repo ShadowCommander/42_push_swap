@@ -6,7 +6,7 @@
 /*   By: jtong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 07:01:09 by jtong             #+#    #+#             */
-/*   Updated: 2021/11/06 15:26:01 by jtong            ###   ########.fr       */
+/*   Updated: 2021/11/06 20:46:58 by jtong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ps_spin_b(t_push_swap *ps, int steps)
 	}
 }
 
-void	ps_inserter_sort(t_push_swap *ps)
+int	ps_inserter_sort(t_push_swap *ps)
 {
 	int	rotations[4];
 	int	shift;
@@ -110,4 +110,5 @@ void	ps_inserter_sort(t_push_swap *ps)
 	ps_spin_b(ps, shift);
 	while (ps->b->length > 0)
 		ps_pa(ps);
+	return (1);
 }

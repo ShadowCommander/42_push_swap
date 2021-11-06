@@ -6,7 +6,7 @@
 /*   By: jtong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 08:43:32 by jtong             #+#    #+#             */
-/*   Updated: 2021/11/06 18:21:36 by jtong            ###   ########.fr       */
+/*   Updated: 2021/11/06 20:48:17 by jtong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ps_small_sort2(t_push_swap *ps)
 	ps_spin_a(ps, steps + 1);
 }
 
-void	ps_small_sort(t_push_swap *ps)
+int	ps_small_sort(t_push_swap *ps)
 {
 	if (ps->a->length == 2)
 		ps_ra(ps);
@@ -49,4 +49,7 @@ void	ps_small_sort(t_push_swap *ps)
 		}
 		ps_small_sort2(ps);
 	}
+	else
+		return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jtong <jtong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 15:04:54 by jtong             #+#    #+#             */
-/*   Updated: 2021/11/06 19:49:21 by jtong            ###   ########.fr       */
+/*   Updated: 2021/11/06 20:51:10 by jtong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,8 @@ int		ps_atoi(t_push_swap *ps, const char *ptr);
 void	ps_spin_a(t_push_swap *ps, int steps);
 
 /* sort push_swap */
-void	ps_sort(t_push_swap *ps);
-void	ps_insertion_sort(t_push_swap *ps);
-
-void	ps_inserter_sort(t_push_swap *ps);
-void	ps_small_sort(t_push_swap *ps);
+int		ps_inserter_sort(t_push_swap *ps);
+int		ps_small_sort(t_push_swap *ps);
 
 /* print */
 void	ps_print_stacks(t_push_swap *ps);

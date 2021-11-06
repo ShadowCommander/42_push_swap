@@ -6,7 +6,7 @@
 /*   By: jtong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 18:16:25 by jtong             #+#    #+#             */
-/*   Updated: 2021/11/06 20:14:58 by jtong            ###   ########.fr       */
+/*   Updated: 2021/11/06 22:06:36 by jtong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 void	ps_cleanup_args(t_push_swap *ps, int print)
 {
-	t_node	*node;
+	t_node	*list_node;
 
 	if (print)
 	{
-		node = ps->instructions->start;
-		while (node)
+		list_node = ps->instructions->start;
+		while (list_node)
 		{
-			ft_putstr((char *)node->content);
+			ft_putstr((char *)list_node->content);
 			ft_putchar('\n');
-			node = node->next;
+			list_node = list_node->next;
 		}
 	}
 	if (ps == NULL)
 		return ;
 	if (ps->a != NULL)
 	{
-		ft_listclear(ps->a, 1);
+		ft_listdelete(&ps->a, 1);
 		if (ps->b != NULL)
 		{
-			ft_listclear(ps->b, 1);
+			ft_listdelete(&ps->b, 1);
 			if (ps->instructions != NULL)
-				ft_listclear(ps->instructions, 0);
+				ft_listdelete(&ps->instructions, 0);
 		}
 	}
 	free(ps);
@@ -53,27 +53,24 @@ void	ps_parse_args(char **splits, t_push_swap *ps)
 {
 	int		i;
 	int		num;
-	t_node	*node;
+	t_node	*list_node;
 
-	i = 0;
-	while (splits[i])
-	{
+	i = -1;
+	while (splits[++i])
 		if (!ft_isnum(splits[i], 1))
 			ps_die(ps, NULL);
-		i++;
-	}
 	i = 0;
 	while (splits[i])
 	{
 		num = ps_atoi(ps, splits[i]);
-		node = ps->a->start;
-		while (node)
+		list_node = ps->a->start;
+		while (list_node)
 		{
-			if (num == ps_get(node))
+			if (num == ps_get(list_node))
 				ps_die(ps, NULL);
-			node = node->next;
+			list_node = list_node->next;
 		}
-		ft_listadd(ps->a, ft_listnode(ft_strndup((char *)&num,
+		ft_listadd(ps->a, ft_listnode(ft_memdup((char *)&num,
 					sizeof(num)), sizeof(num)));
 		i++;
 	}
@@ -81,7 +78,7 @@ void	ps_parse_args(char **splits, t_push_swap *ps)
 
 void	ps_init(t_push_swap **ps)
 {
-	*ps = (t_push_swap *)malloc(sizeof(*ps));
+	*ps = (t_push_swap *)malloc(sizeof(**ps));
 	if (*ps == NULL)
 		ps_die(*ps, NULL);
 	(*ps)->a = ft_listnew();
@@ -99,6 +96,7 @@ int	main(int argc, char **argv)
 {
 	t_push_swap	*ps;
 	int			i;
+	int			j;
 	char		**splits;
 
 	ps_init(&ps);
@@ -107,6 +105,10 @@ int	main(int argc, char **argv)
 	{
 		splits = ft_strsplit(argv[i], ' ');
 		ps_parse_args(splits, ps);
+		j = -1;
+		while (splits[++j])
+			free(splits[j]);
+		free(splits);
 		i++;
 	}
 	if (ps->a->length <= 1 || ps_is_sorted(ps))

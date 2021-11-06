@@ -6,7 +6,7 @@
 /*   By: jtong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 23:00:49 by jtong             #+#    #+#             */
-/*   Updated: 2021/11/06 19:49:07 by jtong            ###   ########.fr       */
+/*   Updated: 2021/11/06 20:51:26 by jtong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ps_flush_reset(t_push_swap *ps, t_array *reset)
 /* loop sorting algos */
 void	ps_run_sorts(t_push_swap *ps)
 {
-	static void	(*sort_functions[])(t_push_swap *ps) = {&ps_inserter_sort,
+	static int	(*sort_functions[])(t_push_swap *ps) = {&ps_inserter_sort,
 					&ps_small_sort, NULL};
 	t_array		*reset;
 	int			i;
@@ -96,8 +96,8 @@ void	ps_run_sorts(t_push_swap *ps)
 	i = 0;
 	while (sort_functions[i])
 	{
-		sort_functions[i](ps);
-		if (ps->instructions->length < reset->saved->length)
+		if (sort_functions[i](ps)
+			&& ps->instructions->length < reset->saved->length)
 		{
 			while (reset->saved->start)
 				ft_listfree(ft_listpop(reset->saved), 0);
